@@ -18,6 +18,11 @@ public class ManejadorExcepciones {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("mensaje", e.getMessage()));
     }
 
+    @ExceptionHandler(CredencialesInvalidasException.class)
+    public ResponseEntity<Map<String, String>> manejarCredencialesInvalidas(CredencialesInvalidasException e){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("mensaje",e.getMessage()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> manejarValidacion(MethodArgumentNotValidException e) {
         Map<String, String> errores = new HashMap<>();

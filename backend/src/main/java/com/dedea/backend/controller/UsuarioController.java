@@ -1,10 +1,11 @@
 package com.dedea.backend.controller;
 
+import com.dedea.backend.dto.LoginRequest;
 import com.dedea.backend.dto.RegistroRequest;
+import com.dedea.backend.dto.TokenResponse;
 import com.dedea.backend.dto.UsuarioResponse;
 import com.dedea.backend.service.UsuarioService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,11 @@ public class UsuarioController {
     @ResponseStatus(HttpStatus.CREATED)
     public UsuarioResponse registrar(@Valid @RequestBody RegistroRequest request){
         return usuarioService.registrar(request);
+    }
+
+    @PostMapping("/login")
+    public TokenResponse login (@Valid @RequestBody LoginRequest request){
+        return usuarioService.login(request);
     }
 
 }
