@@ -47,4 +47,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         return new TokenResponse(jwtService.generarToken(usuario.getId()));
     }
+
+    @Override
+    public UsuarioResponse obtener(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new CredencialesInvalidasException("Usuario no encontrado"));
+        return new UsuarioResponse(usuario.getId(), usuario.getNombre(), usuario.getEmail());
+    }
 }

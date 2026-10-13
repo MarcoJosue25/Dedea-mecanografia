@@ -9,4 +9,6 @@ public interface UsuarioService {
     UsuarioResponse registrar(RegistroRequest request);
 
     TokenResponse login(LoginRequest request);
+
+    UsuarioResponse obtener(Long id);
 }

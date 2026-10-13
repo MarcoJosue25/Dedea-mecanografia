@@ -1,5 +1,6 @@
 package com.dedea.backend.security;
 
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,5 +29,20 @@ public class JwtService {
                 .expiration(new Date(System.currentTimeMillis() + expiracionMs))
                 .signWith(clave)
                 .compact();
+    }
+
+    public Long extraerId(String token) {
+        return Long.valueOf(Jwts.parser().verifyWith(clave).build()
+                .parseSignedClaims(token).getPayload().getSubject());
+    }
+
+    //Este método revisa la firma y el vencimiento, si alguien cambió el token o ya venció no es válido
+    public boolean esValido(String token) {
+        try {
+            Jwts.parser().verifyWith(clave).build().parseSignedClaims(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
     }
 }
